@@ -32,8 +32,8 @@ public class ContactRestClient {
 	@Autowired
 	protected RestTemplate restTemplate;
 
-	private static final String BASE_URL = "http://localhost:8080/myweb-rest-extjs/contact";
-	private static final String BASE_URLS = "http://localhost:8080/myweb-rest-extjs/contacts";
+	private static final String BASE_URL = "http://localhost:8080/myweb-rest-extjs/myrest/contact";
+	private static final String BASE_URLS = "http://localhost:8080/myweb-rest-extjs/myrest/contacts";
 
 	@SuppressWarnings("unchecked")
 	public List<Contact> getContacts(int start, int limit) {

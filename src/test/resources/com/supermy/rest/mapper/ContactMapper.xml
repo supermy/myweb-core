@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.supermy.rest.service.ContactMapper">
+<mapper namespace="com.supermy.rest.mapper.ContactMapper">
 	<!-- 缓存策略： LRU - 最近最少使用法：移出最近较长周期内都没有被使用的对象。 FIFI- 先进先出：移出队列里较早的对象 SOFT 
 		- 软引用：基于软引用规则，使用垃圾回收机制来移出对象 WEAK - 弱引用：基于弱引用规则，使用垃圾回收机制来强制性地移出对象 -->
 	<!-- 创建一个FIFO 缓存让60 秒就清空一次，存储512 个对象结果或列表引用，并且返回的结果是只读。 -->

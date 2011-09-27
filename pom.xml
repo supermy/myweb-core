@@ -6,12 +6,18 @@
 	<artifactId>myweb-core</artifactId>
 	<name>myweb-core</name>
 	<packaging>jar</packaging>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<properties>
-		<spring.version>3.0.5.RELEASE</spring.version>
-		<hibernate.version>3.5.6-Final</hibernate.version>
+		<spring.version>3.0.6.RELEASE</spring.version>
+		<security.version>3.0.7.RELEASE</security.version>
+		<org.aspectj-version>1.6.8</org.aspectj-version>
+		<hibernate.version>3.6.7.Final</hibernate.version>
+		<hibernate-annotations.version>3.5.6-Final</hibernate-annotations.version>
 		<ibatis.version>2.3.4.726</ibatis.version>
 		<slf4j.version>1.6.1</slf4j.version>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>  
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<sourceEncoding>UTF-8</sourceEncoding>
 	</properties>
 	<dependencies>
 
@@ -69,6 +75,20 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
+		<!--log4jdbc -->
+		<dependency>
+			<groupId>net.sf.log4jdbc</groupId>
+			<artifactId>log4jdbc3</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.lazyluke</groupId>
+			<artifactId>log4jdbc-remix</artifactId>
+			<version>0.2.4</version>
+		</dependency>
+
 		<!-- logging end -->
 
 
@@ -160,7 +180,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-annotations</artifactId>
-			<version>${hibernate.version}</version>
+			<version>${hibernate-annotations.version}</version>
 			<optional>true</optional>
 		</dependency>
 
@@ -186,6 +206,12 @@
 			<optional>true</optional>
 		</dependency>
 
+		<!-- ehcache -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-ehcache</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
 
 		<!-- JSR 303 with Hibernate Validator -->
 		<dependency>
@@ -208,7 +234,43 @@
 			<version>1.6.4</version>
 			<optional>true</optional>
 		</dependency>
+		
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>${security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${security.version}</version>
+		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${security.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-acl</artifactId>
+			<version>${security.version}</version>
+		</dependency>
+		
+		<!-- AspectJ -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${org.aspectj-version}</version>
+		</dependency>			
+		
 		<!-- Servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -320,6 +382,11 @@
 			</snapshots>
 		</repository>
 
+		<repository>
+			<id>rapid</id>
+			<url>https://rapid-framework.googlecode.com/svn/trunk/repository</url>
+		</repository>
+
 	</repositories>
 
 	<pluginRepositories>
@@ -356,6 +423,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.3.2</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
 					<source>1.6</source>

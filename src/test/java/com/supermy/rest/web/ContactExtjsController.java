@@ -24,7 +24,7 @@ import com.supermy.rest.service.ContactService;
  * 
  */
 @Controller
-@RequestMapping("/extjscontacts")
+@RequestMapping("/myrest/extjscontacts")
 public class ContactExtjsController {
 	private final Logger logger = LoggerFactory
 			.getLogger(ContactExtjsController.class);

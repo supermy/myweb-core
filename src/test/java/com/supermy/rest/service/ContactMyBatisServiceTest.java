@@ -18,8 +18,8 @@ import org.supermy.core.service.Page;
 import com.supermy.rest.domain.Contact;
  
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring/servlet-context.xml" })
-@TransactionConfiguration(transactionManager = "transactionManager", defaultRollback = false)
+@ContextConfiguration(locations = { "classpath*:spring/business.xml" })
+@TransactionConfiguration(transactionManager = "myBatisTransactionManager", defaultRollback = false)
 public class ContactMyBatisServiceTest  {
 	private final Logger logger = LoggerFactory.getLogger(ContactMyBatisServiceTest.class);
 
