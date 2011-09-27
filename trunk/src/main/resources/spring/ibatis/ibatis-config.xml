@@ -26,12 +26,12 @@
         </constructor-arg>   
     </bean>   
     <!-- 事务管理器 -->   
-    <bean id="transactionManager"   
+    <bean id="ibatisTransactionManager"   
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">   
         <property name="dataSource" ref="dataSource" />   
     </bean>   
     <!-- 配置事务处理通知 -->   
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">   
+    <tx:advice id="txAdvice" transaction-manager="ibatisTransactionManager">   
         <tx:attributes>   
             <tx:method name="get*" read-only="true" />   
             <tx:method name="add*" rollback-for="Exception" />   

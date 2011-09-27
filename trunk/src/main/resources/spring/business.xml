@@ -6,16 +6,18 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- spring 配置文件综合，不包括spring mvc的配置文件 -->
+	<import resource="classpath*:/spring/datasource.xml" />
+	<import resource="classpath*:/spring/hibernate/hibernate-config.xml" />
+	<!-- import resource="ibatis/ibatis-config.xml" /-->
+	<import resource="classpath*:/spring/mybatis/mybatis-context.xml" />
+	<import resource="classpath*:/spring/rest-client.xml" />
+	<import resource="classpath*:/spring/custom.xml" />
+
+	<context:component-scan base-package="**.service" />
+	<!-- enable autowire -->
+    <context:annotation-config />
 	
-
-	<!-- Forwards requests to the "/" resource to the "welcome" view -->
-	<mvc:view-controller path="/" view-name="index"/>
-
-
-	<!-- Resolves view names to protected .jsp resources within the /WEB-INF/views directory -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="prefix" value="/WEB-INF/views/"/>
-		<property name="suffix" value=".jsp"/>
-	</bean>
-
+	
 </beans>

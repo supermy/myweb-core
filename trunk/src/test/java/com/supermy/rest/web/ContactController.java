@@ -24,6 +24,7 @@ import com.supermy.rest.service.ContactService;
  * 
  */
 @Controller
+@RequestMapping("/myrest")
 public class ContactController {
 	private final Logger logger = LoggerFactory
 			.getLogger(ContactController.class);

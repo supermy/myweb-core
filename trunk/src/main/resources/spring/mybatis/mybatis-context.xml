@@ -16,9 +16,6 @@
     <bean id="myBatisTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource" />
     </bean>
-
-    <!-- enable autowire -->
-    <context:annotation-config />
 	
     <!-- enable transaction demarcation with annotations--> 
     <tx:annotation-driven transaction-manager="myBatisTransactionManager" order="2"/>
@@ -27,11 +24,11 @@
     <!-- define the SqlSessionFactory, notice that configLocation is not needed when you use MapperFactoryBean -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="configLocation" value="${sqlSessionFactory.configLocation}" />
+        <property name="configLocation" value="classpath:/spring/mybatis/mybatis-config.xml" />
     </bean>
 
     <!-- scan for mappers and let them be autowired -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="${mapper.basePackage}" />
+        <property name="basePackage" value="**.mapper" />
     </bean>
 </beans>

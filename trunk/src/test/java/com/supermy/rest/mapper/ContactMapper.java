@@ -1,4 +1,4 @@
-package com.supermy.rest.service;
+package com.supermy.rest.mapper;
 
 import java.util.List;
 

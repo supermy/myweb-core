@@ -10,16 +10,20 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
+import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
 import org.hibernate.stat.Statistics;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.orm.hibernate3.HibernateCallback;
 import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -32,14 +36,24 @@ import org.springframework.util.Assert;
  * @param <PK>
  */
 @Transactional(value="hibernateTransactionManager")
-public abstract class BaseHibernateDao<T, PK extends Serializable> {
+public abstract class BaseHibernateDao<T, PK extends Serializable>{ //implements IBaseHibernateDao<T, PK> {
+	@Deprecated
 	protected Log log = LogFactory.getLog(getClass());
+	protected  Logger logger = LoggerFactory
+	.getLogger(getClass());
+	
 	private HibernateTemplate ht;
+	
+	public HibernateTemplate getHt(){
+		return ht;
+	}
 
 	@Autowired
 	public void setSessionFactory(SessionFactory sessionFactory) {
-		log.debug("dao init session factory ");
+		logger.debug("hibernate init session factory ");
 		ht = new HibernateTemplate(sessionFactory);
+		ht.setCacheQueries(true);
+//		ht.
 	}
 
 	public abstract Class getEntityClass();
@@ -71,10 +85,27 @@ public abstract class BaseHibernateDao<T, PK extends Serializable> {
 	 * @param id
 	 * @return
 	 */
+	@Transactional(readOnly=true)
 	public T getById(PK id) {
 		return (T) ht.get(getEntityClass(), id);
 	}
 
+	public List<T> findById(PK[] ids) {
+		StringBuffer hql=new StringBuffer();
+		hql.append("from "+getEntityClass().getSimpleName()+" obj");
+		hql.append(" where obj.pkId in  (");
+		for (PK pk : ids) {
+			hql.append( pk );
+			hql.append( "," );
+		}
+		hql.delete(hql.length()-1, hql.length());
+		hql.append("   )");
+		logger.debug(hql.toString());
+		//String hql1="from "+getEntityClass().getSimpleName()+" obj where obj.pkId in :ids" ;
+		//ht.find(hql1, ids);
+		
+		return  ht.find(hql.toString());
+	}
 	/**
 	 * 根据实体类查询，建议少量数据使用
 	 * 
@@ -93,6 +124,17 @@ public abstract class BaseHibernateDao<T, PK extends Serializable> {
 	public T save(T entity) {
 		ht.save(entity);
 		return entity;
+	}
+	
+	/**
+	 * 将传入的detached(托管)状态的对象的属性复制到持久化对象中，并返回该持久化对象。 如果该session中没有关联的持久化对象，加载一个。
+	 * 如果传入对象未保存，保存一个副本并作为持久对象返回，传入对象依然保持detached状态。
+	 * 
+	 * @param entity
+	 * @return
+	 */
+	public T merge(T entity) {
+		return ht.merge(entity);
 	}
 
 //	/**
@@ -212,19 +254,37 @@ public abstract class BaseHibernateDao<T, PK extends Serializable> {
 	 * 
 	 * @param entities
 	 */
+	@PreAuthorize("hasRole('ROLE_SUPERVISOR')")
 	public void deleteAll(Collection<T> entities) {
+//		logger.debug(">>>>>>>>>>delete all begin");
+//		for (T t : entities) {
+//			ht.delete(t);
+//		}
 		ht.deleteAll(entities);
+//		logger.debug(">>>>>>>>>>delete all end");
 	}
+
 	
 	/**
 	 * @param entities
 	 */
-	public void deleteAll(PK[] entities) {
-		for (PK pk : entities) {
-			ht.delete(getById(pk));
+	@PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+	public void deleteAll(PK[] ids) {
+		StringBuffer hql=new StringBuffer();
+		hql.append("delete from "+getEntityClass().getSimpleName()+" obj");
+		hql.append(" where obj.pkId in  (");
+		for (PK pk : ids) {
+			hql.append( pk );
+			hql.append( "," );
 		}
+		hql.delete(hql.length()-1, hql.length());
+		hql.append("   )");
+		logger.debug(hql.toString());
+		
+		ht.bulkUpdate(hql.toString());
 	}
 
+	
 	/**
 	 * 刷新实体类
 	 * 
@@ -243,6 +303,10 @@ public abstract class BaseHibernateDao<T, PK extends Serializable> {
 
 	public void evict(Object entity) {
 		ht.evict(entity);
+	}
+	
+	public void lock(Object entity,LockMode lockMode) {
+		ht.lock(entity, lockMode);
 	}
 
 	/**
@@ -322,6 +386,20 @@ public abstract class BaseHibernateDao<T, PK extends Serializable> {
 		return pageQuery(hql, countHql, param, params);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<T> find(final String hql) {
+		return ht.find(hql);
+	}
+	@SuppressWarnings("unchecked")
+	@Transactional(readOnly=true)
+	public List<String> find4Attr(final String hql) {
+		return ht.find(hql);
+	}
+	@Transactional(readOnly=true)
+	public List<Object> findByValueBean(final String hql,Object valueBean) {
+		return ht.findByValueBean(hql, valueBean);
+	}
 	/**
 	 * 
 	 * @param hql

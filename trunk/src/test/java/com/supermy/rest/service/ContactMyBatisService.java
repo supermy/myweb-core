@@ -13,7 +13,8 @@ import com.supermy.rest.domain.Contact;
 /**
  * 
  * @author james mo
- *
+ * @version 创建时间：2011-9-13 下午10:21:31
+ *  
  */
 @Repository
 @Transactional(value="myBatisTransactionManager")
@@ -22,7 +23,7 @@ public class ContactMyBatisService{
  
 	
 	@Autowired
-	private ContactMapper contactMapper;
+	private com.supermy.rest.mapper.ContactMapper contactMapper;
 
 	public List<Contact> findByName(String userName) {
 	    return contactMapper.findByName(userName);
