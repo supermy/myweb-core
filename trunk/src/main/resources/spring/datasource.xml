@@ -12,7 +12,7 @@
 
 	<context:property-placeholder location="classpath*:jdbc.properties"/>
 
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+	<bean id="dataSourceSpied" class="com.mchange.v2.c3p0.ComboPooledDataSource"
 		destroy-method="close">
 		<property name="driverClass" value="${jdbc.driverClassName}" />
 		<property name="jdbcUrl" value="${jdbc.url}" />
@@ -32,10 +32,11 @@
 		<property name="testConnectionOnCheckout" value="false" />
 	</bean>
  
-	  <!-- 	
-	  <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
-	    <constructor-arg ref="dataSourceSpied" />
-	  </bean>
+  <!-- 	
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+	  <constructor-arg ref="dataSourceSpied" />
+	</bean>
+	 -->  
 	 <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
 	    <constructor-arg ref="dataSourceSpied" />
 	    <property name="logFormatter"> 
@@ -45,15 +46,13 @@
 	        <property name="sqlPrefix" value="SQL:::" /> 
 	      </bean> 
 	    </property> 
-	  </bean>	  
-	 -->
+	  </bean>	
 	 
 	<!-- log4jdbc可以将数据源执行的sql将占位符?替换成字符,并以日志打印出来. log4j配置: log4j.logger.jdbc.sqltiming=INFO 
 		详情请看: http://code.google.com/p/rapid-framework/wiki/log4jdbc 如oracle示例: 原来的sql: 
 		select * from user where birth_date = ? and username = ? and age > ? 转换后sql: 
 		select * from user where birth_date = to_date('2010-08-13','yyyy-mm-dd') 
 		and username = 'badqiu' and age > 20 
-	-->
 	<bean id="log4jdbcInterceptor" class="net.sf.log4jdbc.DataSourceSpyInterceptor" />
 	<bean id="dataSourceLog4jdbcAutoProxyCreator"
 		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
@@ -68,5 +67,6 @@
 			</list>
 		</property>
 	</bean>
+	-->
 
 </beans>

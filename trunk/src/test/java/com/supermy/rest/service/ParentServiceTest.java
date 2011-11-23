@@ -98,12 +98,13 @@ public class ParentServiceTest  {
 		
 	}
 	
-	@Test
-	@ExpectedException(AuthenticationCredentialsNotFoundException.class)
-	public void aclaopmeth() {
-		parentService.deleteTest();
-		
-	}	
+//	//		//TODO　Security 不在此项目中；
+//	@Test
+//	@ExpectedException(AuthenticationCredentialsNotFoundException.class)
+//	public void aclaopmeth() {
+//		parentService.deleteTest();
+//		
+//	}	
 	
 	@Test
 	@Transactional
