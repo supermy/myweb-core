@@ -38,8 +38,9 @@ public class ChildServiceTest  {
 	@Before
 	public void init(){
 		
-		SecurityUtils.setSimpleAuthToken("test", "test");
-		SecurityUtils.getSimplePrincipal();
+		//TODO　Security 不在此项目中；
+		//SecurityUtils.setSimpleAuthToken("test", "test");
+		//SecurityUtils.getSimplePrincipal();
 		
 		Child c = new Child();
 		c.setName("superadmin");
@@ -56,7 +57,9 @@ public class ChildServiceTest  {
 	}
 	@After
 	public void destory(){
-		SecurityUtils.setSimpleAuthToken("test", "test");
+		//TODO　Security 不在此项目中；
+		//SecurityUtils.setSimpleAuthToken("test", "test");
+		
 		childService.deleteAll(result);
 		
 	}

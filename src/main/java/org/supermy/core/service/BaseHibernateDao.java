@@ -254,7 +254,7 @@ public abstract class BaseHibernateDao<T, PK extends Serializable>{ //implements
 	 * 
 	 * @param entities
 	 */
-	@PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+	//TODO　@PreAuthorize("hasRole('ROLE_SUPERVISOR')")
 	public void deleteAll(Collection<T> entities) {
 //		logger.debug(">>>>>>>>>>delete all begin");
 //		for (T t : entities) {
@@ -268,7 +268,7 @@ public abstract class BaseHibernateDao<T, PK extends Serializable>{ //implements
 	/**
 	 * @param entities
 	 */
-	@PreAuthorize("hasRole('ROLE_SUPERVISOR')")
+	//TODO　@PreAuthorize("hasRole('ROLE_SUPERVISOR')")
 	public void deleteAll(PK[] ids) {
 		StringBuffer hql=new StringBuffer();
 		hql.append("delete from "+getEntityClass().getSimpleName()+" obj");

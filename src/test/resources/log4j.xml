@@ -23,6 +23,7 @@
 		</layout>
 	</appender>
 
+	<!-- 
 	<appender name="JDBCAppender" class="org.apache.log4j.jdbc.JDBCAppender">
 		<param name="URL" value="jdbc:oracle:thin:@127.0.0.1:1521:log" />
 		<param name="user" value="oracle" />
@@ -33,28 +34,33 @@
 				value="insert into log4j(createdate,thread,level_,class,message) values(\'%d\',\'%t\',\'%-5p\',\'%c\',\'%m\')" />
 		</layout>
 	</appender>
+	-->
 
 	<!-- 3rdparty Loggers <logger name="org.springframework.core"> <level value="info" 
 		/> </logger> <logger name="org.springframework.beans"> <level value="info" 
 		/> </logger> <logger name="org.springframework.context"> <level value="info" 
 		/> </logger> <logger name="org.springframework.orm.hibernate3"> <level value="debug" 
 		/> </logger> -->
-		
+
 	<logger name="org.springframework.web">
 		<level value="info" />
 	</logger>
-	
+
 	<!-- TODO <logger name="jdbc.audit"> <level value="info" /> </logger> <logger 
 		name="jdbc.resultset"> <level value="info" /> </logger> <logger name="jdbc.connection"> 
 		<level value="info" /> </logger> -->
-		
+
 	<logger name="jdbc.sqltiming">
 		<level value="info" />
 	</logger>
 
-	<!-- log4jdbc option log the jdbc results as a table <logger name="jdbc.resultsettable" 
-		additivity="false"> <level value="info" /> <appender-ref ref="console" /> 
-		</logger> -->
+	<!-- log4jdbc option log the jdbc results as a table  表格的形式返回数据查询结果 
+	<logger name="jdbc.resultsettable" additivity="false">
+		<level value="info" />
+		<appender-ref ref="console" />
+	</logger>
+	-->
+
 
 	<logger name="org.supermy">
 		<level value="debug" />
